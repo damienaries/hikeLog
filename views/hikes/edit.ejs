@@ -1,0 +1,55 @@
+<% layout('layouts/boilerplate') %>
+
+    <div class="row">
+        <h1 class="text-center">Edit Hike</h1>
+        <div class="col-6 offset-3">
+            <form action="/hikes/<%= hike._id %>?_method=PUT" method="POST" class="validated-form" novalidate enctype="multipart/form-data">
+                <div class="mb-3">
+                    <label class="form-label" for="title">Title</label>
+                    <input class="form-control" type="text" id="title" name="hike[title]" value="<%= hike.title %>" required><div class="valid-feedback">Looks Good!</div>
+                </div>
+        
+                <div class="mb-3">
+                    <label class="form-label" for="location">Location</label>
+                    <input class="form-control" type="text" id="location" name="hike[location]" value="<%= hike.location %>" required><div class="valid-feedback">Looks Good!</div>
+                </div>
+                
+                <div class="mb-3">
+                    <label class="form-label" for="price">Hike Price</label>
+                    <div class="input-group">
+                        <span class="input-group-text" id="price-label">$</span>
+                        <input class="form-control" type="text" name="hike[price]" id="price" placeholder="0" aria-label="price" aria-describedby="price-label" value="<%= hike.price %>" required><div class="valid-feedback">Looks Good!</div>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label" for="description">Description</label>
+                    <textarea class="form-control" type="text" id="description" name="hike[description]" required>
+                        <%= hike.description %>
+                    </textarea><div class="valid-feedback">Looks Good!</div>
+                </div>
+
+                <div class="mb-3 custom-file">
+                    <label for="image" class="form-label custom-file-label">Add More Images</label>
+                    <input class="form-control" type="file" id="image" name="image" multiple>
+                </div>
+               
+                <div class="mb-3">
+                    <% hike.images.forEach(function(img, i) { %>
+                        <img src="<%= img.thumbnail %>" class="img-thumbnail" alt="">
+                        <div class="form-check-inline">
+                            <input type="checkbox" name="deleteImages[]" value="<%= img.filename %>" id="image-<%= i %>">
+                        </div>
+                        <label for="image-<%= i %>">Delete</label>
+                    <% }) %>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-info">Update Hike</button>
+                </div>
+            </form>
+
+            <a href="/hikes/<%= hike._id %>" class="btn btn-warning">
+                Back to Hike
+            </a>
+        </div>
+    </div>
